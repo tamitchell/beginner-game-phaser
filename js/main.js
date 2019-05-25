@@ -18,36 +18,38 @@ window.onload = function () {
 
     function preload() {
         // Load an image and call it 'logo'.
-        game.load.image('bg', 'assets/images/bg.jpg');
+        game.load.spritesheet('background', 'assets/images/background.png', 1200, 894);
         game.load.spritesheet('dog', 'assets/images/dog_run.png', 250, 180);
     }
 
     var dog;
-    var upKey;
-    var downKey;
+    // var upKey;
     var leftKey;
     var rightKey;
     var speed = 7;
-    var bg;
+    var background;
 
     function create() {
 
-        bg = game.add.image(0, 0, 'bg');
-        bg.scale.setTo(2.0,2.0);
-        bg.anchor.x = 0;
-        bg.anchor.y = 0;
+        background = game.add.sprite(0, 0, 'background');
+        background.width = game.width;
+        background.height = game.height;
         // Create a sprite at the center of the screen using the 'dog' image.
-        dog = game.add.sprite(window.innerWidth / 2, window.innerHeight / 2, 'dog');
-
+        dog = game.add.sprite(200, window.innerHeight - 250, 'dog');
+        
         dog.animations.add('walk');
+        background.animations.add('static');
+        
         dog.animations.play('walk', 10, true);
+        background.animations.play('static', 8, true);
 
+        //background set to align to top of window
+        background.anchor.setTo(0, .2);
         //dog, centered
         dog.anchor.setTo(0.5, 0.5);
 
         //keyboard-input to move dog
-        upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-        downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        // upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
         leftKey = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
         rightKey = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 
@@ -58,12 +60,9 @@ window.onload = function () {
 
     function update() {
         //dog-movement
-        if (upKey.isDown) {
-            dog.y -= speed;
-        } else if (downKey.isDown) {
-            dog.y += speed;
-        }
-
+        // if (upKey.isDown) {
+        //     dog.y -= speed;
+        // }
         if (leftKey.isDown) {
             dog.x -= speed;
         } else if (rightKey.isDown) {
